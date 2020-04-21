@@ -64,7 +64,9 @@ Variable               | Description
 
 Start/provision the VM (this will take a bit of time):
 
-`$ vagrant up`
+```bash
+$ vagrant up
+```
 
 
 ## Certificates
