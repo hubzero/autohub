@@ -25,7 +25,7 @@ Prereqs:
 Check out this repository:
 
 ```bash
-$ git clone <this-repo> <target-dir>
+$ git clone https://gitlab.hubzero.org/hubzero-next/autohub <target-dir>
 $ cd <target-dir>
 ```
 
@@ -136,23 +136,33 @@ File                  | Description
 
 Build the image (this takes a while):
 
-`$ packer build -var-file=vars.json centos6.json`
+```bash
+$ packer build -var-file=vars.json centos6.json
+```
 
 To add to Vagrant:
 
-`$ vagrant box add <your-box-name> ~/path-to-box/HUBzero-CentOS-6.10-x86_64-<yyyyMMdd>-virtualbox.box`
+```bash
+$ vagrant box add <your-box-name> ~/path-to-box/HUBzero-CentOS-6.10-x86_64-<yyyyMMdd>-virtualbox.box
+```
 
 Then in `vars.yml` set `HUBZERO_VAGRANT_BOX: <your-box-name>` and run:
 
-`$ vagrant up`
+```bash
+$ vagrant up
+```
 
 To delete the box from Vagrant:
 
-`$ vagrant box remove <your-box-name>`
+```bash
+$ vagrant box remove <your-box-name>
+```
 
 See all installed boxes:
 
-`$ vagrant box list`
+```bash
+$ vagrant box list
+```
 
 To make available remotely via the Internet, `metadata.json` should be updated with the new version, and both it and the `.box` file uploaded to `https://help.hubzero.org` into the `/app/site/media/vm/` directory.
 
