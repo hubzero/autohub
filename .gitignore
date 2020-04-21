@@ -1,0 +1,6 @@
+.vagrant/
+data/
+*.crt
+*.box
+packer/output-*/
+packer/packer_cache/

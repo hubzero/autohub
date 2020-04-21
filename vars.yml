@@ -1,0 +1,36 @@
+# Vagrant box name
+HUBZERO_VAGRANT_BOX: hubzero/hub-centos6
+
+# VM details
+VBOX_CPUS: 2
+VBOX_MEMORY: 4096
+VBOX_HEADLESS: true
+
+# HUBzero details
+HUBNAME: &hubname devhub
+CMS_ADMIN_USER: admin
+CMS_ADMIN_PASSWORD: vagrant
+CMS_DB_PASSWORD: vagrant
+DB_ROOT_PASSWORD: vagrant
+
+# Guest machine hostname (will be combined into FQDN)
+HOST: *hubname
+DOMAIN_NAME: localdomain
+
+# Features
+SOLR_ENABLED: false
+SOLR_ENABLED: true
+
+# Host/guest synced directory
+HOST_SHARE_DIR: ./guestdata
+GUEST_SHARE_DIR: /hostdata
+
+# Port forwards (on host machine)
+HOST_PORT_HTTP: 5442
+HOST_PORT_HTTPS: 5443
+HOST_PORT_MYSQL: 53306
+HOST_PORT_WSS: 8443
+HOST_PORT_SOLR: 58445
+
+# Set to true to bind above host ports to 0.0.0.0 instead of 127.0.0.1
+HOST_FWD_PUBLIC: false

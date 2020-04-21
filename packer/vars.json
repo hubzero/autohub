@@ -1,0 +1,13 @@
+{
+  "username": "vagrant",
+  "password": "vagrant",
+  "iso_url": "http://ftp.ussg.iu.edu/linux/centos/6/isos/x86_64/CentOS-6.10-x86_64-netinstall.iso",
+  "iso_checksum": "56f7b078a3b443095ba006cdc85319c691251cda98c5d73d12ef6db7aff6b4c1",
+  "iso_checksum_type": "sha256",
+  "cpus": "2",
+  "memory": "4096",
+  "disk_size": "20480",
+  "ssh_timeout": "30m",
+  "post_shutdown_delay": "60s",
+  "headless": "false"
+}
