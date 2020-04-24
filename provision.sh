@@ -5,7 +5,7 @@ set -o pipefail
 set -o noglob
 
 # Uncomment to debug
-set -x
+#set -x
 
 
 ##############################################################################
