@@ -37,28 +37,29 @@ $ vagrant box add https://help.hubzero.org/app/site/media/vm/metadata.json
 
 Review the config in `vars.yml`:
 
-Variable               | Description
---                     | --
-`HUBZERO_VAGRANT_BOX`  | Vagrant box name
-`VBOX_CPUS`            | Number of VM CPUs
-`VBOX_MEMORY`          | VM RAM allocation
-`VBOX_HEADLESS`        | Flag to run in headless mode
-`HUBNAME`              | HUBzero hub name
-`CMS_ADMIN_USER`       | HUBzero admin username (changing this isn't supported currently)
-`CMS_ADMIN_PASSWORD`   | HUBzero admin password
-`CMS_DB_PASSWORD`      | HUBzero database password
-`DB_ROOT_PASSWORD`     | Password for MySQL `root` user
-`HOST`                 | Hub subdomain (defaults to `HUBNAME`)
-`DOMAIN_NAME`          | Hub primary domain name (combined with `HOST` to get FQDN/hostname)
-`SOLR_ENABLED`         | Flag to enable Solr search
-`HOST_SHARE_DIR`       | Shared directory path on host
-`GUEST_SHARE_DIR`      | Shared directory path in guest VM
-`HOST_PORT_HTTP`       | Host port to forward guest `80` to
-`HOST_PORT_HTTPS`      | Host port to forward guest `443` to
-`HOST_PORT_MYSQL`      | Host port to forward guest `3306` to
-`HOST_PORT_WSS`        | Host port to forward guest `8443` to
-`HOST_PORT_SOLR`       | Host port to forward guest `8445` to
-`HOST_FWD_PUBLIC`      | Flag to forward guest ports to `0.0.0.0` instead of default `127.0.0.1`
+Variable                | Description
+--                      | --
+`HUBZERO_VAGRANT_BOX`   | Vagrant box name
+`VBOX_CPUS`             | Number of VM CPUs
+`VBOX_MEMORY`           | VM RAM allocation
+`VBOX_HEADLESS`         | Flag to run in headless mode
+`HUBNAME`               | HUBzero hub name
+`CMS_ADMIN_USER`        | HUBzero admin username (changing this isn't supported currently)
+`CMS_ADMIN_PASSWORD`    | HUBzero admin password
+`CMS_DB_PASSWORD`       | HUBzero database password
+`DB_ROOT_PASSWORD`      | Password for MySQL `root` user
+`HOST`                  | Hub subdomain (defaults to `HUBNAME`)
+`DOMAIN_NAME`           | Hub primary domain name (combined with `HOST` to get FQDN/hostname)
+`SOLR_ENABLED`          | Flag to enable Solr search
+`HOST_SHARE_DIR`        | Shared directory path on host
+`GUEST_SHARE_DIR`       | Shared directory path in guest VM
+`HOST_PORT_HTTP`        | Host port to forward guest `80` to
+`HOST_PORT_HTTPS`       | Host port to forward guest `443` to
+`HOST_PORT_MYSQL`       | Host port to forward guest `3306` to
+`HOST_PORT_WSS`         | Host port to forward guest `8443` to
+`HOST_PORT_SOLR`        | Host port to forward guest `8445` to
+`HOST_PORT_PUBLIC`      | Flag to forward guest ports to `0.0.0.0` instead of default `127.0.0.1`
+`HOST_PORT_AUTOCORRECT` | Flag to choose another port to forward to on the host when there is a conflict
 
 `Vagrantfile` controls Vagrant, but most of the interesting options are pulled from `vars.yml`. `provision.sh` does the heavy lifting for setting up the hub. Neither should require modification to get a working hub up unless there are bugs.
 
@@ -71,9 +72,15 @@ $ vagrant up
 
 ## Certificates
 
-During hub provisioning, a fake certificate authority (CA) and TLS cert are created. These are automatically installed into hub subsystems, but to eliminate browser warnings and for VNC to work properly, the CA cert must be trusted by your browser of choice.
+While provisining the hub, the script creates a new TLS certificate for HTTPS and the VNC proxy's Secure WebSocket (WSS). You can provide the issuing certificate authority (CA) or not. In the latter case the system will generate its own fake issuing CA first using [minica](https://github.com/jsha/minica).
 
-Install the generated `<hubname>-devhub-fake-ca.crt` into your browser. Instructions on where this file is located appear after `vagrant up` completes.
+Providing your own CA can save the tedious work of manually adding a new CA to a browser, because you can install your own CA once, and not have to worry about it for subsequent `autohub` hubs when using the same browser.
+
+The easiest way to do this is to have `autohub` create a fake CA during the initial run, installing that into your browser(s), and saving that CA's cert/key for later use.
+
+After the hub's created, the files `ca.crt` (CA cert) and `ca.key` (CA private key) are placed into the guest's share directory (`./guestdata`). Just copy these out and store somewhere for later use. Then, when spinning up a new hub, just make sure they are in that hub's `./guestdata` directory. The script will use them when creating that hub's cert.
+
+Install the generated `ca.crt` into your browser. Instructions on where this file is located appear after `vagrant up` completes.
 
 First, edit your `/etc/hosts` file and add the line:
 
@@ -108,7 +115,7 @@ Now visit your hub. By default it will have an address like:
 
 https://devhub.localdomain:5443/
 
-Your browser should not complain of an insecure connection.
+Your browser should not complain of an insecure connection. It will complain if you use `localhost` instead though, hence the edit to `/etc/hosts`.
 
 After logging in as `admin`, you may be prompted to change your password.
 
