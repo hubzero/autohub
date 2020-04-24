@@ -480,6 +480,16 @@ echo "[INFO] Nothing implemented yet for Shibboleth"
 # TODO: implement
 
 
+##############################################################################
+#
+# Quality-of-life improvements
+#
+
+# TODO: remove from here when new Packer image is created
+yum install --disableplugin=fastestmirror -y colordiff jq
+git config --global color.ui auto
+echo export GREP_OPTIONS='--color=auto' >> /etc/bashrc
+
 cat <<EOT > /etc/motd
 +------------------------------------------------------------------------
 |
