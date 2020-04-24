@@ -77,7 +77,7 @@ fi
 LOCAL_MYSQL_CONF=/root/.my.cnf
 mysqladmin -u root password "${DB_ROOT_PASSWORD}"
 echo -e "[client]\nuser=root\npassword=${DB_ROOT_PASSWORD}\n" > ${LOCAL_MYSQL_CONF}
-chmod 0600 ${LOCAL_MYSQL_CONF}
+chmod -f 0600 ${LOCAL_MYSQL_CONF}
 
 
 ##############################################################################
@@ -103,7 +103,7 @@ fi
 echo "[INFO] Setting up hub"
 if [[ ! -z "${CMS_ADMIN_PASSWORD}" ]]; then
         echo -n ${CMS_ADMIN_PASSWORD} > /etc/hubzero-adminpw
-	chmod 0600 /etc/hubzero-adminpw
+	chmod -f 0600 /etc/hubzero-adminpw
 fi
 if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
 	echo "[INFO] Getting hub code from remote"
@@ -172,9 +172,9 @@ update-ca-trust
 # Make Apache use cert
 echo "[INFO] Adding cert to Apache/HUBzero"
 cp -f ${MINICA_DIR}/${HOSTNAME}/key.pem ${CMS_KEY_PATH}
-chmod 0640 ${CMS_KEY_PATH}
+chmod -f 0640 ${CMS_KEY_PATH}
 cp -f ${MINICA_DIR}/${HOSTNAME}/cert.pem ${CMS_CERT_PATH}
-chmod 0644 ${CMS_CERT_PATH}
+chmod -f 0644 ${CMS_CERT_PATH}
 sed -ri "s#(SSLCertificateFile) SSLCERTFILE#\1 ${CMS_CERT_PATH}#" "/etc/httpd/sites-m4/${HUBNAME}-ssl.m4"
 sed -ri "s#(SSLCertificateKeyFile) SSLCERTKEYFILE#\1 ${CMS_KEY_PATH}#" "/etc/httpd/sites-m4/${HUBNAME}-ssl.m4"
 hzcms reconfigure ${HUBNAME}
