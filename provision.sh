@@ -480,6 +480,26 @@ echo "[INFO] Nothing implemented yet for Shibboleth"
 # TODO: implement
 
 
+cat <<EOT > /etc/motd
++------------------------------------------------------------------------
+|
+| '${HUBNAME}' DEVELOPMENT HUB
+|
+| Hub name:            ${HUBNAME}
+| Hub hostname:        ${HOSTNAME}
+| Document root:       $(grep documentroot /etc/hubzero.conf | awk '{print $3}')
+| CMS admin user:      ${CMS_ADMIN_USER}
+| CMS admin password:  ${CMS_ADMIN_PASSWORD}
+| MySQL root password: ${DB_ROOT_PASSWORD}
+| MySQL CMS user:      ${HUBNAME}
+| MySQL CMS password:  ${CMS_DB_PASSWORD}
+|
+| * These are initial values; changes you make won't be reflected here
+|
++------------------------------------------------------------------------
+EOT
+
+
 ##############################################################################
 #
 # Finished; closing notes
