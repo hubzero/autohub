@@ -1,6 +1,9 @@
 .vagrant/
 data/
 *.crt
+*.key
 *.box
 packer/output-*/
 packer/packer_cache/
+guestdata/
+!guestdata/.keep
