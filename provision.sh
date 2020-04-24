@@ -123,7 +123,9 @@ if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
 
 	# Remove friction from making changes to files
 	chown -fR apache:vagrant /var/www/${HUBNAME}
+	chown -fR apache:vagrant /var/www/${HUBNAME}/.*
 	chmod -fR g+w /var/www/${HUBNAME}
+	chmod -fR g+w /var/www/${HUBNAME}/.*
 
 	# Appease `hubzero-app`
 	chgrp -f apache /var/www/${HUBNAME}/configuration.php
