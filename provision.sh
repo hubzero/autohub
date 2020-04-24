@@ -170,7 +170,7 @@ ${MINICA_DIR}/minica --domains ${HOSTNAME}
 HOST_CA_CERT_PATH="${HOST_SHARE_DIR}/ca.crt"
 cp -f ${MINICA_KEY} ${CA_KEY_PATH}
 cp -f ${MINICA_CERT} ${CA_CERT_PATH}
-cp -f ${MINICA_CERT} "${GUEST_CA_KEY_PATH}"
+cp -f ${MINICA_KEY} "${GUEST_CA_KEY_PATH}"
 cp -f ${MINICA_CERT} "${GUEST_CA_CERT_PATH}"
 chmod -f 0640 ${CA_CERT_PATH}
 chmod -f 0640 ${CA_KEY_PATH}
