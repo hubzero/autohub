@@ -117,8 +117,6 @@ https://devhub.localdomain:5443/
 
 Your browser should not complain of an insecure connection. It will complain if you use `localhost` instead though, hence the edit to `/etc/hosts`.
 
-After logging in as `admin`, you may be prompted to change your password.
-
 
 ## Make your own custom Vagrant box
 
