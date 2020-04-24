@@ -50,6 +50,8 @@ Variable                | Description
 `DB_ROOT_PASSWORD`      | Password for MySQL `root` user
 `HOST`                  | Hub subdomain (defaults to `HUBNAME`)
 `DOMAIN_NAME`           | Hub primary domain name (combined with `HOST` to get FQDN/hostname)
+`HUB_SOURCE_URL`        | HTTP(S) URL of git repo to pull hub source from (if blank, use pre-packaged hub code)
+`HUB_SOURCE_BRANCH`     | Branch to checkout when getting source from git repo (default: `master`)
 `SOLR_ENABLED`          | Flag to enable Solr search
 `HOST_SHARE_DIR`        | Shared directory path on host
 `GUEST_SHARE_DIR`       | Shared directory path in guest VM
