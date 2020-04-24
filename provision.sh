@@ -151,20 +151,35 @@ WHERE name='com_usage';
 EOT
 
 # Create certs
-echo "[INFO] Creating certificate authority and cert for host '${HOSTNAME}'"
+HOST_CA_CERT_PATH="${HOST_SHARE_DIR}/ca.crt"
+GUEST_CA_KEY_PATH="${GUEST_SHARE_DIR}/ca.key"
+GUEST_CA_CERT_PATH="${GUEST_SHARE_DIR}/ca.crt"
+MINICA_CERT="${MINICA_DIR}/minica.pem"
+MINICA_KEY="${MINICA_DIR}/minica-key.pem"
+if [[ -f "${GUEST_CA_KEY_PATH}" && -f "${GUEST_CA_CERT_PATH}" ]]; then
+	echo "[INFO] Using existing certificate authority to create cert for host' ${HOSTNAME}'"
+	EXISTING_CA=true
+	cp -f ${GUEST_CA_KEY_PATH} ${MINICA_KEY}
+	cp -f ${GUEST_CA_CERT_PATH} ${MINICA_CERT}
+else
+	echo "[INFO] Creating new fake certificate authority and cert for host '${HOSTNAME}'"
+	EXISTING_CA=false
+fi
 cd ${MINICA_DIR}
 ${MINICA_DIR}/minica --domains ${HOSTNAME}
-GUEST_CA_CERT_BASEPATH="${GUEST_SHARE_DIR}/${HUBNAME}-fake-ca"
-HOST_CA_CERT_BASEPATH="${HOST_SHARE_DIR}/${HUBNAME}-fake-ca"
-cp -f ${MINICA_DIR}/minica-key.pem ${CA_KEY_PATH}
-chmod 0640 ${CA_KEY_PATH}
-cp -f ${MINICA_DIR}/minica.pem ${CA_CERT_PATH}
-chmod 0640 ${CA_CERT_PATH}
-cp -f ${MINICA_DIR}/minica.pem "${GUEST_CA_CERT_BASEPATH}.crt"
+HOST_CA_CERT_PATH="${HOST_SHARE_DIR}/ca.crt"
+cp -f ${MINICA_KEY} ${CA_KEY_PATH}
+cp -f ${MINICA_CERT} ${CA_CERT_PATH}
+cp -f ${MINICA_CERT} "${GUEST_CA_KEY_PATH}"
+cp -f ${MINICA_CERT} "${GUEST_CA_CERT_PATH}"
+chmod -f 0640 ${CA_CERT_PATH}
+chmod -f 0640 ${CA_KEY_PATH}
+chmod -f 0640 ${GUEST_CA_KEY_PATH}
+chmod -f 0640 ${GUEST_CA_CERT_PATH}
 cd ~vagrant
 
 # Install CA locally
-echo "[INFO] Installing fake certificate authority"
+echo "[INFO] Installing certificate authority"
 cp -f ${MINICA_DIR}/minica.pem /etc/pki/ca-trust/source/anchors/${HUBNAME}-fake-ca.pem
 update-ca-trust force-enable
 update-ca-trust
@@ -469,8 +484,19 @@ echo "[INFO] Nothing implemented yet for Shibboleth"
 #
 # Finished; closing notes
 #
-echo "[INFO] Import the fake CA certificate below into your client browser(s)"
-cat ${GUEST_CA_CERT_BASEPATH}.crt
+
+if [[ "${EXISTING_CA}" = true ]]; then
+	echo "[INFO] If not already done, import the CA certificate below into your client browser(s)"
+else
+	echo "[INFO] Import the fake CA certificate below into your client browser(s)"
+fi
+cat ${GUEST_CA_CERT_PATH}
 echo "[INFO] Available as a file here:"
-echo "[INFO]     - '${HOST_CA_CERT_BASEPATH}.crt' (on host machine)"
-echo "[INFO]     - '${GUEST_CA_CERT_BASEPATH}.crt' (on guest VM)"
+echo "[INFO]   - '${HOST_CA_CERT_PATH}' (on host machine)"
+echo "[INFO]   - '${GUEST_CA_CERT_PATH}' (on guest VM)"
+CA_ISSUER=$(openssl x509 -noout -issuer -in ${MINICA_CERT} | cut -d= -f3)
+echo "[INFO] CA issuer (will display in browser): '${CA_ISSUER}'"
+echo "[INFO] * Add '${HOSTNAME} 127.0.0.1' to your host machine's"
+echo "[INFO]   '/etc/hosts' for the TLS cert to be accepted; e.g.:"
+echo "[INFO] $ echo 'echo 127.0.0.1 ${HOSTNAME} >> /etc/hosts' | sudo sh"
+echo "[INFO] Hub setup is complete"
