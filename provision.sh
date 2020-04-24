@@ -90,7 +90,7 @@ if (( $? == 0 )); then
         echo "[INFO] No issues detected with Postfix"
 else
 	echo "[ERROR] Problem(s) found with Postfix"
-        echo "        * See https://help.hubzero.org/documentation/22/installation/redhat/install/mail"
+        echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/mail"
         exit 1
 fi
 
@@ -315,7 +315,7 @@ if (( $? == 0 )); then
         echo "[INFO] Verified OpenVZ is working"
 else
         echo "[ERROR] Problems found with OpenVZ"
-        echo "        * See https://help.hubzero.org/documentation/22/installation/redhat/install/openvz"
+        echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/openvz"
         exit 1
 fi
 
@@ -347,7 +347,7 @@ if (( $? == 1 )); then
 	echo "[INFO] Session appears to have launched properly"
 else
 	echo "[ERROR] Session failed to launch"
-	echo "        * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
+	echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
 	exit 1
 fi
 
@@ -360,7 +360,7 @@ if (( $OPENSSL_SUCCESS == 0 && $? == 0 )); then
 	echo "[INFO] Able to connect to session VNC server"
 else
 	echo "[ERROR] Failed to connect to session VNC server"
-	echo "        * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
+	echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
 	exit 1
 fi
 
@@ -370,7 +370,7 @@ if (( $? == 0 )); then
 	echo "[INFO] Successfully shut down session"
 else
 	echo "[ERROR] Failed to shut down session"
-	echo "        * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
+	echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
 	vzlist
 	exit 1
 fi
@@ -408,7 +408,7 @@ if (( ${LINES} > 0 )); then
 	echo "[INFO] Quotas appear to be enabled"
 else
 	echo "[ERROR] Quotas don't seem to be set"
-        echo "        * See https://help.hubzero.org/documentation/22/installation/redhat/install/telequotad"
+        echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/telequotad"
         exit 1
 fi
 
@@ -438,10 +438,10 @@ hzcms configure filexfer --enable
 #
 
 echo "[INFO] Rappture is already configured"
-echo "       * A workspace may need to be opened and closed a few times before"
-echo "         the changes to the session template appear in a workspace."
+echo "[INFO] * A workspace may need to be opened and closed a few times before"
+echo "[INFO] the changes to the session template appear in a workspace."
 echo "[INFO] Further manual testing is required"
-echo "       * See https://help.hubzero.org/documentation/22/installation/redhat/install/rappture"
+echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat/install/rappture"
 
 
 ##############################################################################
@@ -452,7 +452,7 @@ echo "       * See https://help.hubzero.org/documentation/22/installation/redhat
 echo "[INFO] Configuring Submit"
 hzcms configure submit-server --enable
 echo "[INFO] Further manual configuration/testing is required"
-echo "       * See https://help.hubzero.org/documentation/22/installation/redhat/install/submit"
+echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat/install/submit"
 
 
 ##############################################################################
@@ -465,7 +465,7 @@ if [[ "${SOLR_ENABLED}" = true ]]; then
 	service hubzero-solr start
 	chkconfig hubzero-solr on
 	echo "[INFO] Further configuration is required to use Solr search"
-	echo "       * See https://help.hubzero.org/documentation/22/installation/redhat/addons/solr"
+	echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat/addons/solr"
 else
 	echo "[INFO] Solr option is disabled; skipping"
 fi
