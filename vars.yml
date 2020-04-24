@@ -9,16 +9,27 @@ VBOX_HEADLESS: true
 # HUBzero details
 HUBNAME: &hubname devhub
 CMS_ADMIN_USER: admin
-CMS_ADMIN_PASSWORD: vagrant
-CMS_DB_PASSWORD: vagrant
-DB_ROOT_PASSWORD: vagrant
+CMS_ADMIN_PASSWORD: vagrant1
+CMS_DB_PASSWORD: vagrant1
+DB_ROOT_PASSWORD: vagrant1
+
+# HUBzero source code URL
+# - Installs code directly into documentroot
+# - Leave blank to use prepackaged CMS code (hubzero-cms-2.2)
+# - Use `https://` protocol, not `git://`
+HUB_SOURCE_URL: https://github.com/hubzero/hubzero-cms.git
+#HUB_SOURCE_URL: 
+
+# HUBzero source code branch
+# - Used only when $HUB_SOURCE_URL is set
+# - If blank, defaults to `master`
+HUB_SOURCE_BRANCH: dev
 
 # Guest machine hostname (will be combined into FQDN)
 HOST: *hubname
 DOMAIN_NAME: localdomain
 
 # Features
-SOLR_ENABLED: false
 SOLR_ENABLED: true
 
 # Host/guest synced directory
@@ -33,4 +44,7 @@ HOST_PORT_WSS: 8443
 HOST_PORT_SOLR: 58445
 
 # Set to true to bind above host ports to 0.0.0.0 instead of 127.0.0.1
-HOST_FWD_PUBLIC: false
+HOST_PORT_PUBLIC: false
+
+# Set to true to find new open ports if those above aren't available
+HOST_PORT_AUTOCORRECT: true

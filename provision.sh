@@ -105,8 +105,34 @@ if [[ ! -z "${CMS_ADMIN_PASSWORD}" ]]; then
         echo -n ${CMS_ADMIN_PASSWORD} > /etc/hubzero-adminpw
 	chmod 0600 /etc/hubzero-adminpw
 fi
+if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
+	echo "[INFO] Getting hub code from remote"
+	HUBZERO_CMS_DIR=/usr/share/hubzero-cms-git/cms
+	mkdir -p ${HUBZERO_CMS_DIR}
+	git clone ${HUB_SOURCE_URL} ${HUBZERO_CMS_DIR}
+	DOTGIT_BACKUP_DIR=${HUBZERO_CMS_DIR}/.git-BAK
+	# hzcms shirks its duty if `.git/` exists
+	mv -f ${HUBZERO_CMS_DIR}/.git ${DOTGIT_BACKUP_DIR}
+fi
 hzcms install ${HUBNAME}
 hzcms update
+if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
+	# Restore `.git/`
+	mv -f ${DOTGIT_BACKUP_DIR} ${HUBZERO_CMS_DIR}/.git
+	cp -r ${HUBZERO_CMS_DIR}/.git /var/www/${HUBNAME}/
+
+	# Remove friction from making changes to files
+	chown -fR apache:vagrant /var/www/${HUBNAME}
+	chmod -fR g+w /var/www/${HUBNAME}
+
+	# Appease `hubzero-app`
+	chgrp -f apache /var/www/${HUBNAME}/configuration.php
+
+	# Start with a clean slate
+	cd /var/www/${HUBNAME}
+	git stash
+	git stash clear
+fi
 
 # Reset CMS passwords
 if [[ ! -z "${CMS_DB_PASSWORD}" ]]; then

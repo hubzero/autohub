@@ -21,9 +21,15 @@ Vagrant.configure('2') do |config|
 
   config.vm.hostname = "#{VARS['HOST']}.#{VARS['DOMAIN_NAME']}"
 
-  host_ip = '127.0.0.1' unless VARS['HOST_FWD_PUBLIC']
+  host_ip = VARS['HOST_PORT_PUBLIC'] ? '0.0.0.0' : '127.0.0.1'
+  auto_correct = VARS['HOST_PORT_AUTOCORRECT']
   FORWARDS.each { |fwd|
-    config.vm.network :forwarded_port, guest: fwd[:guest], host: fwd[:host], id: fwd[:id], host_ip: host_ip
+    config.vm.network :forwarded_port,
+                      guest: fwd[:guest],
+                      host: fwd[:host],
+                      id: fwd[:id],
+                      host_ip: host_ip,
+                      auto_correct: auto_correct
   }
 
   config.vm.synced_folder VARS['HOST_SHARE_DIR'], VARS['GUEST_SHARE_DIR']
