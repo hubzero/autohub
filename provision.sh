@@ -182,6 +182,7 @@ EOT
 
 # Create certs
 HOST_CA_CERT_PATH="${HOST_SHARE_DIR}/ca.crt"
+HOST_CA_KEY_PATH="${HOST_SHARE_DIR}/ca.key"
 GUEST_CA_KEY_PATH="${GUEST_SHARE_DIR}/ca.key"
 GUEST_CA_CERT_PATH="${GUEST_SHARE_DIR}/ca.crt"
 MINICA_CERT="${MINICA_DIR}/minica.pem"
@@ -546,17 +547,16 @@ EOT
 # Finished; closing notes
 #
 
+echo "[INFO] Certificate authority keys are here on the host machine:"
+echo "[INFO]   - '${HOST_CA_CERT_PATH}' (private key)"
+echo "[INFO]   - '${HOST_CA_KEY_PATH}' (public key)"
 if [[ "${EXISTING_CA}" = true ]]; then
-	echo "[INFO] If not already done, import the CA certificate below into your client browser(s)"
+	echo "[INFO] * If not already done, import the CA certificate below into your client browser(s)"
 else
-	echo "[INFO] Import the fake CA certificate below into your client browser(s)"
+	echo "[INFO] * Import the fake CA certificate below into your client browser(s)"
 fi
-cat ${GUEST_CA_CERT_PATH}
-echo "[INFO] Available as a file here:"
-echo "[INFO]   - '${HOST_CA_CERT_PATH}' (on host machine)"
-echo "[INFO]   - '${GUEST_CA_CERT_PATH}' (on guest VM)"
 CA_ISSUER=$(openssl x509 -noout -issuer -in ${MINICA_CERT} | cut -d= -f3)
-echo "[INFO] CA issuer (will display in browser): '${CA_ISSUER}'"
+echo "[INFO]   CA issuer (will display in browser): '${CA_ISSUER}'"
 echo "[INFO] * Add '${HOSTNAME} 127.0.0.1' to your host machine's"
 echo "[INFO]   '/etc/hosts' for the TLS cert to be accepted; e.g.:"
 echo "[INFO]   $ echo 'echo 127.0.0.1 ${HOSTNAME} >> /etc/hosts' | sudo sh"
