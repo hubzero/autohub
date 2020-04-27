@@ -48,6 +48,34 @@ fi
 
 ##############################################################################
 #
+# SSH keypair
+#
+
+SSH_KEY_TYPE=rsa
+SSH_KEY_FN=id_${SSH_KEY_TYPE}
+SSH_KEY_PATH=~vagrant/.ssh/${SSH_KEY_FN}
+SHARED_SSH_KEY_PATH="${GUEST_SHARE_DIR}/${SSH_KEY_FN}"
+if [[ -f ${SHARED_SSH_KEY_PATH} && -f ${SHARED_SSH_KEY_PATH}.pub ]]; then
+	echo "[INFO] Using existing SSH keypair"
+	cp -f "${SHARED_SSH_KEY_PATH}" "${SSH_KEY_PATH}"
+	cp -f "${SHARED_SSH_KEY_PATH}.pub" "${SSH_KEY_PATH}.pub"
+	chmod -f 0600 "${SSH_KEY_PATH}"
+	chmod -f 0644 "${SSH_KEY_PATH}.pub"
+	chown -f vagrant:vagrant "${SSH_KEY_PATH}"
+	chown -f vagrant:vagrant "${SSH_KEY_PATH}.pub"
+else
+	echo "[INFO] Creating SSH keypair"
+	rm -f "${SSH_KEY_PATH}" "${SSH_KEY_PATH}.pub"
+	ssh-keygen -f "${SSH_KEY_PATH}" -t ${SSH_KEY_TYPE} -N ''
+	chown -f vagrant:vagrant "${SSH_KEY_PATH}"
+	chown -f vagrant:vagrant "${SSH_KEY_PATH}.pub"
+	cp -f "${SSH_KEY_PATH}" "${SHARED_SSH_KEY_PATH}"
+	cp -f "${SSH_KEY_PATH}.pub" "${SHARED_SSH_KEY_PATH}.pub"
+fi
+
+
+##############################################################################
+#
 # Pre-check
 #
 
@@ -531,5 +559,9 @@ CA_ISSUER=$(openssl x509 -noout -issuer -in ${MINICA_CERT} | cut -d= -f3)
 echo "[INFO] CA issuer (will display in browser): '${CA_ISSUER}'"
 echo "[INFO] * Add '${HOSTNAME} 127.0.0.1' to your host machine's"
 echo "[INFO]   '/etc/hosts' for the TLS cert to be accepted; e.g.:"
-echo "[INFO] $ echo 'echo 127.0.0.1 ${HOSTNAME} >> /etc/hosts' | sudo sh"
+echo "[INFO]   $ echo 'echo 127.0.0.1 ${HOSTNAME} >> /etc/hosts' | sudo sh"
+echo "[INFO] SSH keypair is here on the host machine:"
+echo "[INFO]   - '${HOST_SHARE_DIR}/${SSH_KEY_FN}' (private key)"
+echo "[INFO]   - '${HOST_SHARE_DIR}/${SSH_KEY_FN}.pub' (public key)"
+echo "[INFO] * Add the public key to GitHub/GitLab/etc. to allow pushing code"
 echo "[INFO] Hub setup is complete"
