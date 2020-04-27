@@ -133,21 +133,40 @@ if [[ ! -z "${CMS_ADMIN_PASSWORD}" ]]; then
         echo -n ${CMS_ADMIN_PASSWORD} > /etc/hubzero-adminpw
 	chmod -f 0600 /etc/hubzero-adminpw
 fi
-if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
+if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
 	echo "[INFO] Getting hub code from remote"
 	HUBZERO_CMS_DIR=/usr/share/hubzero-cms-git/cms
 	mkdir -p ${HUBZERO_CMS_DIR}
-	git clone ${HUB_SOURCE_URL} ${HUBZERO_CMS_DIR}
+	if [[ ! -z "${GIT_USERNAME}" ]]; then
+		git config --global user.name "${GIT_USERNAME}"
+		echo "[INFO] Global git username set to '${GIT_USERNAME}'"
+	fi
+	if [[ ! -z "${GIT_EMAIL}" ]]; then
+		git config --global user.email "${GIT_EMAIL}"
+		echo "[INFO] Global git email set to '${GIT_EMAIL}'"
+	fi
+	git clone ${HUB_UPSTREAM_URL} --depth 1 --branch ${HUB_UPSTREAM_BRANCH} ${HUBZERO_CMS_DIR}
+	cd ${HUBZERO_CMS_DIR}
+	git remote rename origin upstream
+	git remote add origin ${HUB_ORIGIN_URL}
 	DOTGIT_BACKUP_DIR=${HUBZERO_CMS_DIR}/.git-BAK
 	# hzcms shirks its duty if `.git/` exists
 	mv -f ${HUBZERO_CMS_DIR}/.git ${DOTGIT_BACKUP_DIR}
+else
+	echo "[INFO] Using hub code from package manager"
 fi
 hzcms install ${HUBNAME}
 hzcms update
-if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
+if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
 	# Restore `.git/`
 	mv -f ${DOTGIT_BACKUP_DIR} ${HUBZERO_CMS_DIR}/.git
 	cp -r ${HUBZERO_CMS_DIR}/.git /var/www/${HUBNAME}/
+
+	# Start with a clean slate
+	echo "[INFO] Stashing changes"
+	cd /var/www/${HUBNAME}
+	git stash
+	git stash clear
 
 	# Remove friction from making changes to files
 	chown -fR apache:vagrant /var/www/${HUBNAME}
@@ -157,11 +176,6 @@ if [[ ! -z "${HUB_SOURCE_URL}" ]]; then
 
 	# Appease `hubzero-app`
 	chgrp -f apache /var/www/${HUBNAME}/configuration.php
-
-	# Start with a clean slate
-	cd /var/www/${HUBNAME}
-	git stash
-	git stash clear
 fi
 
 # Reset CMS passwords
