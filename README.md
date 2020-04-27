@@ -50,8 +50,11 @@ Variable                | Description
 `DB_ROOT_PASSWORD`      | Password for MySQL `root` user
 `HOST`                  | Hub subdomain (defaults to `HUBNAME`)
 `DOMAIN_NAME`           | Hub primary domain name (combined with `HOST` to get FQDN/hostname)
-`HUB_SOURCE_URL`        | HTTP(S) URL of git repo to pull hub source from (if blank, use pre-packaged hub code)
-`HUB_SOURCE_BRANCH`     | Branch to checkout when getting source from git repo (default: `master`)
+`HUB_UPSTREAM_URL`      | URL of git repo to pull hub source from (if blank, use pre-packaged hub code); typically should be official [HUBzero CMS](https://github.com/hubzero/hubzero-cms)
+`HUB_UPSTREAM_BRANCH`   | Branch to checkout when getting source from git repo (default: `master`)
+`HUB_ORIGIN_URL`        | `hubzero-cms` URL of git repo to use as remote `origin` (typically your forked version of `HUB_UPSTREAM_URL`)
+`GIT_USERNAME`          | Git committer/author name
+`GIT_EMAIL`             | Git committer/author email address
 `SOLR_ENABLED`          | Flag to enable Solr search
 `HOST_SHARE_DIR`        | Shared directory path on host
 `GUEST_SHARE_DIR`       | Shared directory path in guest VM
@@ -118,6 +121,36 @@ Now visit your hub. By default it will have an address like:
 https://devhub.localdomain:5443/
 
 Your browser should not complain of an insecure connection. It will complain if you use `localhost` instead though, hence the edit to `/etc/hosts`.
+
+
+## SSH keypair
+
+The provision script will generate an SSH keypair by default. To avoid continually adding SSH keys to GitHub, et al, you may want to use a pregenerated keypair for all HUBzero CMS-related work. To do this, place the RSA keypair (`id_rsa` and `id_rsa.pub` into the shared directory (`./guestdata`), and add the public key to your GitHub account. The provision script will install them into the guest for you.
+
+**NOTE**: Never use a primary keypair for this, as this is a security risk. Generate a "throwaway" keypair and use that instead. For example, you could let `autohub` generate the keypair, then use that in subsequent hubs you create. This will facilitate easily revokation of the `autohub` keypair without affecting your other workflows.
+
+
+## GitHub workflow
+
+A recommended GitHub workflow is below.
+
+Prereqs:
+
+1. Verify [`upstream` repo](./vars.yml:L34) is correct
+1. Set [git username](./vars.yml:L37)
+1. Set [git email](./vars.yml:L38)
+1. VM's public SSH key is added to [your GitHub account](https://github.com/settings/keys) (`./guestdata/id_rsa.pub` for newly spun-up VMs)
+1. Fork the `upstream` repo via GitHub's web UI, and set the proper [`origin` repo](./vars.yml:L34)
+
+Code change workflow:
+
+1. Create a new hub (`vagrant up`)
+1. SSH into the hub (`vagrant ssh`)
+1. Create a new branch for your bugfix/feature (`cd /var/www/<hubname> && git checkout -b <branch-name>`)
+1. Implement and test your changes
+1. Push the branch to your forked origin `hubzero-cms` repo (`git push --set-upstream origin <branch-name>`)
+1. Make a PR against the upstream `hubzero-cms` repo (via GitHub's web UI)
+1. After your PR is accepted, feel free to destroy the hub (`vagrant destroy`)
 
 
 ## Make your own custom Vagrant box
