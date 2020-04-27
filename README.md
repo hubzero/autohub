@@ -136,11 +136,11 @@ A recommended GitHub workflow is below.
 
 Prereqs:
 
-1. Verify [`upstream` repo](./vars.yml:L34) is correct
-1. Set [git username](./vars.yml:L37)
-1. Set [git email](./vars.yml:L38)
+1. Verify [`upstream` repo](vars.yml:L34) is correct
+1. Set [git username](vars.yml:L37)
+1. Set [git email](vars.yml:L38)
 1. VM's public SSH key is added to [your GitHub account](https://github.com/settings/keys) (`./guestdata/id_rsa.pub` for newly spun-up VMs)
-1. Fork the `upstream` repo via GitHub's web UI, and set the proper [`origin` repo](./vars.yml:L34)
+1. Fork the `upstream` repo via GitHub's web UI, and set the proper [`origin` repo](vars.yml:L34)
 
 Code change workflow:
 
