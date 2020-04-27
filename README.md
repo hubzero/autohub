@@ -66,7 +66,7 @@ Variable                | Description
 `HOST_PORT_PUBLIC`      | Flag to forward guest ports to `0.0.0.0` instead of default `127.0.0.1`
 `HOST_PORT_AUTOCORRECT` | Flag to choose another port to forward to on the host when there is a conflict
 
-`Vagrantfile` controls Vagrant, but most of the interesting options are pulled from `vars.yml`. `provision.sh` does the heavy lifting for setting up the hub. Neither should require modification to get a working hub up unless there are bugs.
+[`Vagrantfile`](/Vagrantfile) controls Vagrant, but most of the interesting options are pulled from [`vars.yml`](/vars.yml). [`provision.sh`](/provision.sh) does the heavy lifting for setting up the hub. Neither should require modification to get a working hub up unless there are bugs.
 
 Start/provision the VM (this will take a bit of time):
 
@@ -93,7 +93,7 @@ First, edit your `/etc/hosts` file and add the line:
 127.0.0.1    <hubname>.localdomain
 ```
 
-Firefox:
+### Firefox
 
 1. Click the hamburger menu, then **Preferences**
 1. Select the **Privacy & Security** tab
@@ -105,7 +105,7 @@ Firefox:
 1. On the *Downloading Certificate* popup, check **Trust this CA to identify websites.**, then click **OK**
 1. Click **OK** in *Certificate Manager*
 
-Chrome:
+### Chrome
 
 1. Click on the 3 vertical dots, then **Settings**
 1. Click **Advanced**, then **Privacy and security**
@@ -136,11 +136,11 @@ A recommended GitHub workflow is below.
 
 Prereqs:
 
-1. Verify [`upstream` repo](vars.yml:L34) is correct
-1. Set [git username](vars.yml:L37)
-1. Set [git email](vars.yml:L38)
+1. Verify [`upstream` repo](/vars.yml#L34) is correct
+1. Set [git username](/vars.yml#L37)
+1. Set [git email](/vars.yml#L38)
 1. VM's public SSH key is added to [your GitHub account](https://github.com/settings/keys) (`./guestdata/id_rsa.pub` for newly spun-up VMs)
-1. Fork the `upstream` repo via GitHub's web UI, and set the proper [`origin` repo](vars.yml:L34)
+1. Fork the `upstream` repo via GitHub's web UI, and set the proper [`origin` repo](/vars.yml#L34)
 
 Code change workflow:
 
