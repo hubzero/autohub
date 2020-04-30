@@ -95,26 +95,44 @@ First, edit your `/etc/hosts` file and add the line:
 
 ### Firefox
 
+#### Linux/macOS
+
 1. Click the hamburger menu, then **Preferences**
 1. Select the **Privacy & Security** tab
 1. Click the **View Certificates...** button under *Security* > *Certificates* at the bottom of the page
 1. Select the **Authorities** tab
 1. Click the **Import...** button
-1. Navigate to the directory that holds `<hubname>-devhub-fake-ca.crt`
+1. Navigate to the directory that holds `ca.crt`
 1. Select the file and click the **Open** button
 1. On the *Downloading Certificate* popup, check **Trust this CA to identify websites.**, then click **OK**
 1. Click **OK** in *Certificate Manager*
 
-### Chrome
+### Chrome/Chromium
+
+#### Linux
 
 1. Click on the 3 vertical dots, then **Settings**
 1. Click **Advanced**, then **Privacy and security**
 1. Click on **Manage certificates**
 1. Select the **Authorities** tab
 1. Click the **Import** button
-1. Navigate to the directory that holds `<hubname>-devhub-fake-ca.crt`
+1. Navigate to the directory that holds `ca.crt`
 1. Select the file and click the **Open** button
 1. On the *Certificate authority* popup, check **Trust this certificate for identifying websites**, then click **OK**
+
+#### macOS
+
+1. Click on the 3 vertical dots, then **Settings**
+1. Click **Privacy and security**
+1. Click **More** in the *Privacy and security* box
+1. Click on **Manage certificates** (this opens macOS *Keychain Access* in a new window)
+1. Select **File** > **Import Items...** on the *Keychain Access* menu bar
+1. Navigate to the directory that holds `ca.crt`
+1. Select the file and click the **Open** button
+1. Give your password if prompted
+1. Right-click the cert (named `minica root ca ` with a 6-digit hex code) and click **Get Info**
+1. On the popup, expand **Trust** then select **Always Trust** from the **Secure Sockets Layer (SSL)** dropdown
+1. Close the popup and exit *Keychain Access*
 
 Now visit your hub. By default it will have an address like:
 
