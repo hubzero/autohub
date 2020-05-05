@@ -1,5 +1,20 @@
 # HUBzero Development VM
 
+## Quick Start
+
+1. Install dependencies
+    1. [VirtualBox](https://www.virtualbox.org/)
+    2. [Vagrant](https://www.vagrantup.com/)
+2. Clone this repo
+3. Download base image from vagrant
+    1. `$ vagrant box add https://help.hubzero.org/app/site/media/vm/metadata.json`
+4. Update `vars.yml`
+    1. Git user info
+5. Start machine
+    1. `$ vagrant up`
+6. [Trust certificates](#certificates)
+7. Visit the [hub](https://devhub.localdomain:5443)
+
 ## Summary
 
 Sets up a mostly fully functioning HUBzero instance inside a Vagrant VirtualBox-backed VM for CentOS 6.
