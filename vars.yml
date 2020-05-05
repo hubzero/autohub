@@ -1,3 +1,14 @@
+# Used for identification in git commits
+GIT_USERNAME: '<YOUR GH UN>'
+GIT_EMAIL: '<YOUR GH EMAIL>'
+
+# HUBzero forked repo URL
+# - This should point to a repo you control
+# - When done making a change, a PR should be made from this repo
+#     to the repo above
+# - Use e.g. `git@github.com`, not `https://` to avoid 403 Forbidden errors
+HUB_ORIGIN_URL: git@github.com:<YOUR GH USER>/hubzero-cms.git
+
 # Vagrant box name
 HUBZERO_VAGRANT_BOX: hubzero/hub-centos6
 
@@ -20,23 +31,11 @@ DB_ROOT_PASSWORD: vagrant1
 # - Leave blank to use prepackaged CMS code (hubzero-cms-2.2)
 # - Use `https://` protocol, not `git://` to avoid script failure due to SSH prompts
 HUB_UPSTREAM_URL: https://github.com/hubzero/hubzero-cms.git
-#HUB_UPSTREAM_URL: 
 
 # HUBzero source code branch
 # - Used only when $HUB_SOURCE_URL is set
 # - If blank, defaults to `master`
 HUB_UPSTREAM_BRANCH: dev
-
-# HUBzero forked repo URL
-# - This should point to a repo you control
-# - When done making a change, a PR should be made from this repo
-#     to the repo above
-# - Use e.g. `git@github.com`, not `https://` to avoid 403 Forbidden errors
-HUB_ORIGIN_URL: git@github.com:jeffkayser/hubzero-cms.git
-
-# Used for identification in git commits
-GIT_USERNAME: 'Jeff Kayser'
-GIT_EMAIL: 'jkayser@ucsd.edu'
 
 # Guest machine hostname (will be combined into FQDN)
 HOST: *hubname
