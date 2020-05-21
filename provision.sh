@@ -531,7 +531,7 @@ echo "[INFO] Nothing implemented yet for Shibboleth"
 #
 
 # TODO: remove from here when new Packer image is created
-yum install --disableplugin=fastestmirror -y colordiff jq
+yum install --disableplugin=fastestmirror -y colordiff jq ncdu tmux
 git config --global color.ui auto
 mv -f ~/.gitconfig /etc/gitconfig
 echo export GREP_OPTIONS='--color=auto' >> /etc/bashrc
