@@ -210,8 +210,8 @@ A foreign linux environment can be difficult to adjust to once you have your own
 First, copy any dotfiles you want to use into the `./guestdata/dotfiles` directory:
 
 ```bash
-$ cp -r .vim ~/dev/work/ucsd/autohub/guestdata/dotfiles/
-$ cp .bashrc ~/dev/work/ucsd/autohub/guestdata/dotfiles/
+$ cp -r .vim ./guestdata/dotfiles/
+$ cp .bashrc ./guestdata/dotfiles/
 ```
 
 Then, when SSHed into the machine, symbolically link the files from dotfiles to your `$HOME` directory.
