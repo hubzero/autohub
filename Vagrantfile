@@ -3,7 +3,17 @@
 
 # Load user variables
 require 'yaml'
-VARS = YAML.load(File.read('./vars.yml'))
+
+def find_file(fn, dir='.')
+  while true
+    path = File.join dir, fn
+    break if File.file? path or File.file?(File.join dir, 'Vagrantfile')
+    dir = File.expand_path File.join dir, '..'
+  end
+  return path
+end
+
+VARS = YAML.load(File.read(find_file('vars.yml')))
 FORWARDS = [
   # SSH is auto-forwarded to host port 2222 or similar
   { id: 'http', guest: 80, host: VARS['HOST_PORT_HTTP'].to_i },
