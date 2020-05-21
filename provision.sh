@@ -551,6 +551,7 @@ cat <<EOT > /etc/motd
 | MySQL CMS password:  ${CMS_DB_PASSWORD}
 |
 | * These are initial values; changes you make won't be reflected here
+| * Edit '/etc/motd' to make changes
 |
 +------------------------------------------------------------------------
 EOT
@@ -561,21 +562,35 @@ EOT
 # Finished; closing notes
 #
 
-echo "[INFO] Certificate authority keys are here on the host machine:"
-echo "[INFO]   - '${HOST_CA_CERT_PATH}' (private key)"
-echo "[INFO]   - '${HOST_CA_KEY_PATH}' (public key)"
+echo "[INFO] ==(( ACTION REQUIRED ))================================================"
 if [[ "${EXISTING_CA}" = true ]]; then
 	echo "[INFO] * If not already done, import the CA certificate below into your client browser(s)"
 else
 	echo "[INFO] * Import the fake CA certificate below into your client browser(s)"
 fi
+echo "[INFO]"
+echo "[INFO]   Certificate authority keys are here on the host machine:"
+echo "[INFO]"
+echo "[INFO]     - '${HOST_CA_CERT_PATH}' (private key)"
+echo "[INFO]     - '${HOST_CA_KEY_PATH}' (public key)"
+echo "[INFO]"
 CA_ISSUER=$(openssl x509 -noout -issuer -in ${MINICA_CERT} | cut -d= -f3)
 echo "[INFO]   CA issuer (will display in browser): '${CA_ISSUER}'"
+echo "[INFO]"
+echo "[INFO] ==(( ACTION REQUIRED ))================================================"
+echo "[INFO]"
 echo "[INFO] * Add '${HOSTNAME} 127.0.0.1' to your host machine's"
+echo "[INFO]"
 echo "[INFO]   '/etc/hosts' for the TLS cert to be accepted; e.g.:"
 echo "[INFO]   $ echo 'echo 127.0.0.1 ${HOSTNAME} >> /etc/hosts' | sudo sh"
-echo "[INFO] SSH keypair is here on the host machine:"
-echo "[INFO]   - '${HOST_SHARE_DIR}/${SSH_KEY_FN}' (private key)"
-echo "[INFO]   - '${HOST_SHARE_DIR}/${SSH_KEY_FN}.pub' (public key)"
-echo "[INFO] * Add the public key to GitHub/GitLab/etc. to allow pushing code"
+echo "[INFO]"
+echo "[INFO] ==(( ACTION REQUIRED ))================================================"
+echo "[INFO]"
+echo "[INFO] * Add the public SSH key to GitHub/GitLab/etc. to allow pushing code"
+echo "[INFO]"
+echo "[INFO]   SSH keypair is here on the host machine:"
+echo "[INFO]     - '${HOST_SHARE_DIR}/${SSH_KEY_FN}' (private key)"
+echo "[INFO]     - '${HOST_SHARE_DIR}/${SSH_KEY_FN}.pub' (public key)"
+echo "[INFO]"
+echo "[INFO] ***********************************************************************"
 echo "[INFO] Hub setup is complete"
