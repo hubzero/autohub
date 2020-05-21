@@ -33,6 +33,9 @@ Vagrant.configure('2') do |config|
   }
 
   config.vm.synced_folder VARS['HOST_SHARE_DIR'], VARS['GUEST_SHARE_DIR']
+  config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], 'db/hub'), "/var/lib/mysql/#{VARS['HUBNAME']}", owner: 'mysql', group: 'mysql'
+  config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], 'db/hub_metrics'), "/var/lib/mysql/#{VARS['HUBNAME']}_metrics", owner: 'mysql', group: 'mysql'
+  config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], 'webroot'), "/var/www/#{VARS['HUBNAME']}", owner: 'apache', group: 'apache'
 
   config.vm.provider 'virtualbox' do |vb|
     vb.name = "hubzero-#{VARS['HUBNAME']}"
