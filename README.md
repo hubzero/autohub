@@ -171,6 +171,61 @@ Code change workflow:
 1. After your PR is accepted, feel free to destroy the hub (`vagrant destroy`)
 
 
+## Editing code / Persisting data
+
+By default the webroot (`/var/www/<hubname>`) is exposed to the host in the `./guestdata/webroot` directory via Vagrant's [synced folders](https://www.vagrantup.com/docs/synced-folders/) functionality. This allows you to edit the files via the host through whatever IDE/editor you desire that you already have configured and are already familiar with (e.g., [PhpStorm](https://www.jetbrains.com/phpstorm/), [vim](https://www.vim.org/), [VSCode](https://code.visualstudio.com/)).
+
+This can lead to some confusion and issues, however, so be sure to read the docs. First, the synced webroot will remain when the hub VM is shut down (`vagrant halt`), and even when the machine is completely deleted (`vagrant destroy`).
+
+Second, if you delete the files on the host, they will be deleted on the guest, and vice-versa.
+
+Finally, all files have to have the same permissions, and the hub can have isuses unless the files are owned by `apache` and also belong to the `apache` group. You can edit the files freely via the host, but when SSHed into the machine, you will have to use `sudo` to modify them.
+
+One benefit of this behavior, however, is that you may move the webroot or select files to different autohub instances, which may be useful.
+
+To disable this behavior, simply comment out the line that sets up the synced folder in the `Vagrantfile` (look for 'webroot' in a `config.vm.synced_folder` directive). This must be done before a hub is provisioned for the first time.
+
+The database is similarly shared in the `./guestdata/db` directory. As above, this can be useful for preserving hub database data or preseeding it. This can also similarly be disabled.
+
+
+## Dotfiles
+
+A foreign linux environment can be difficult to adjust to once you have your own environment configured the way you like it. With a small bit of effort, you can get your dotfiles into the guest environment and make things work the way you're used to.
+
+First, copy any dotfiles you want to use into the `./guestdata/dotfiles` directory:
+
+```bash
+$ cp -r .vim ~/dev/work/ucsd/autohub/guestdata/dotfiles/
+$ cp .bashrc ~/dev/work/ucsd/autohub/guestdata/dotfiles/
+```
+
+Then, when SSHed into the machine, symbolically link the files from dotfiles to your `$HOME` directory.
+
+```bash
+cd $HOME
+ln -s /hostdata/dotfiles/.vim ./
+ln -s .vim/vimrc ./.vimrc
+ln -s /hostdata/dotfiles/.bashrc ./
+```
+
+Log out and back in, and things should be working as you expect.
+
+
+## Misc notes
+
+**Bad request error when logging in**
+
+If you attempt to log into the hub and see something like:
+
+> **Bad Request**
+>
+> Your browser sent a request that this server could not understand.
+> Size of a request header field exceeds server limit.
+
+Try deleting all cookies associated with the hub's domain (e.g., `devhub.localdomain`).
+
+
+
 ## Make your own custom Vagrant box
 
 Prereqs:
