@@ -543,7 +543,7 @@ xdebug.remote_host='${HOST_IP}'
 xdebug.remote_port=9000
 xdebug.remote_connect_back=1
 xdebug.remote_autostart=1
-xdebug.idekey='${HUB_NAME}'
+xdebug.idekey='${HUBNAME}'
 EOT
 
 
@@ -622,7 +622,7 @@ echo "[INFO]"
 echo "[INFO] * Setup remote PHP debugging:"
 echo "[INFO]"
 echo "[INFO]   - See README.md for instructions"
-echo "[INFO]   - You may have to set your IDE key to '${HUB_NAME}'"
+echo "[INFO]   - You may have to set your IDE key to '${HUBNAME}'"
 echo "[INFO]"
 echo "[INFO] ***********************************************************************"
 echo "[INFO] Hub setup is complete"
