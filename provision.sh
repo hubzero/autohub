@@ -531,7 +531,7 @@ echo "[INFO] Nothing implemented yet for Shibboleth"
 #
 
 PHP_ROOT='/opt/remi/php56/root'
-PHP_INI_PATH="${PHP_INI}/etc/php.ini"
+PHP_INI_PATH="${PHP_ROOT}/etc/php.ini"
 HOST_IP=$(echo $SSH_CLIENT | cut -d' ' -f1)
 cat <<EOT >> ${PHP_INI_PATH}
 
