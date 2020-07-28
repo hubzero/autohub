@@ -622,7 +622,7 @@ echo "[INFO]"
 echo "[INFO] * Setup remote PHP debugging:"
 echo "[INFO]"
 echo "[INFO]   - See README.md for instructions"
-echo "[INFO]   - You may have to set your IDE key to '${HUB_NAME}'
+echo "[INFO]   - You may have to set your IDE key to '${HUB_NAME}'"
 echo "[INFO]"
 echo "[INFO] ***********************************************************************"
 echo "[INFO] Hub setup is complete"
