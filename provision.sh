@@ -527,6 +527,28 @@ echo "[INFO] Nothing implemented yet for Shibboleth"
 
 ##############################################################################
 #
+# PHP debugging support
+#
+
+PHP_ROOT='/opt/remi/php56/root'
+PHP_INI_PATH="${PHP_INI}/etc/php.ini"
+HOST_IP=$(echo $SSH_CLIENT | cut -d' ' -f1)
+cat <<EOT >> ${PHP_INI_PATH}
+
+;; Added by autohub
+[xdebug]
+zend_extension=${PHP_ROOT}/usr/lib64/php/modules/xdebug.so
+xdebug.remote_enable=1
+xdebug.remote_host='${HOST_IP}'
+xdebug.remote_port=9000
+xdebug.remote_connect_back=1
+xdebug.remote_autostart=1
+xdebug.idekey='${HUB_NAME}'
+EOT
+
+
+##############################################################################
+#
 # Quality-of-life improvements
 #
 
@@ -551,6 +573,7 @@ cat <<EOT > /etc/motd
 | MySQL root password: ${DB_ROOT_PASSWORD}
 | MySQL CMS user:      ${HUBNAME}
 | MySQL CMS password:  ${CMS_DB_PASSWORD}
+| php.ini location:    ${PHP_INI_PATH}
 |
 | * These are initial values; changes you make won't be reflected here
 | * Edit '/etc/motd' to make changes
@@ -593,6 +616,13 @@ echo "[INFO]"
 echo "[INFO]   SSH keypair is here on the host machine:"
 echo "[INFO]     - '${HOST_SHARE_DIR}/${SSH_KEY_FN}' (private key)"
 echo "[INFO]     - '${HOST_SHARE_DIR}/${SSH_KEY_FN}.pub' (public key)"
+echo "[INFO]"
+echo "[INFO] ==(( ACTION REQUIRED ))================================================"
+echo "[INFO]"
+echo "[INFO] * Setup remote PHP debugging:"
+echo "[INFO]"
+echo "[INFO]   - See README.md for instructions"
+echo "[INFO]   - You may have to set your IDE key to '${HUB_NAME}'
 echo "[INFO]"
 echo "[INFO] ***********************************************************************"
 echo "[INFO] Hub setup is complete"

@@ -203,6 +203,18 @@ To disable this behavior, simply comment out the line that sets up the synced fo
 The database is similarly shared in the `./guestdata/db` directory. As above, this can be useful for preserving hub database data or preseeding it. This can also similarly be disabled.
 
 
+## Debugging PHP
+
+[Xdebug](https://xdebug.org/) is installed during setup, which enables remote debugging of hub code in your favorite IDE (see [**Clients**](https://xdebug.org/docs/remote) for a list of supported IDEs).
+
+For example, to get debugging working with PhpStorm:
+
+- [Configure PhpStorm](https://www.jetbrains.com/help/phpstorm/2020.1/configuring-xdebug.html#integrationWithProduct)
+- Install **Xdebug helper** browser addon:
+    - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/xdebug-helper-for-firefox/)
+    - [Chrome](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
+
+
 ## Dotfiles
 
 A foreign linux environment can be difficult to adjust to once you have your own environment configured the way you like it. With a small bit of effort, you can get your dotfiles into the guest environment and make things work the way you're used to.
