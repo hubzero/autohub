@@ -51,6 +51,30 @@ fi
 
 ##############################################################################
 #
+# Guard against old data
+#
+
+echo "[INFO] Checking for orphaned webroot and database data"
+NUM_WEB_FILES=$(find ${GUEST_SHARE_DIR}/webroot -type f -not -name '.keep' | wc -l)
+NUM_DB_FILES=$(find ${GUEST_SHARE_DIR}/db -type f -not -name '.keep' | wc -l)
+if (( $NUM_WEB_FILES > 0 )); then
+	echo "[WARN] Non-empty webroot found at ${HOST_SHARE_DIR}/webroot"
+fi
+if (( $NUM_DB_FILES > 0 )); then
+	echo "[WARN] Non-empty database found at ${HOST_SHARE_DIR}/db"
+fi
+if (( $NUM_WEB_FILES > 0 || $NUM_DB_FILES > 0 )); then
+	echo "[ERROR] Not overwriting orphaned data; please delete or move the data"
+	echo "[ERROR] Running the script \`./delete-cms-data.sh\` will delete the data for you."
+	echo "[ERROR] Afteward run \`vagrant destroy -f && vagrant up\` afterward to recreate the VM"
+	exit 1
+else
+	echo "[INFO] No orphaned data found"
+fi
+
+
+##############################################################################
+#
 # SSH keypair
 #
 
