@@ -180,6 +180,11 @@ if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
 	# Appease `hubzero-app`
 	chgrp -f apache ${HUBROOT}/configuration.php
 
+	# Replicate config under `app`
+	echo "[INFO] Copying configuration to app directory"
+	mkdir -p ${HUBROOT}/app/config
+	#cp -f ${HUBROOT}/config/*.php ${HUBROOT}/app/config/
+	find ${HUBROOT}/config -type f -exec cp -f {} ${HUBROOT}/app/config/ \;
 fi
 
 # Reset CMS passwords
