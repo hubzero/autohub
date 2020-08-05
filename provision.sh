@@ -500,8 +500,6 @@ echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat
 
 echo "[INFO] Configuring Submit"
 hzcms configure submit-server --enable
-echo "[INFO] Further manual configuration/testing is required"
-echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat/install/submit"
 
 
 ##############################################################################
@@ -513,8 +511,6 @@ if [[ "${SOLR_ENABLED}" = true ]]; then
 	echo "[INFO] Starting Solr"
 	service hubzero-solr start
 	chkconfig hubzero-solr on
-	echo "[INFO] Further configuration is required to use Solr search"
-	echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat/addons/solr"
 else
 	echo "[INFO] Solr option is disabled; skipping"
 fi
@@ -593,6 +589,7 @@ EOT
 
 echo "[INFO] ==(( ACTION REQUIRED ))================================================"
 if [[ "${EXISTING_CA}" = true ]]; then
+	echo "[INFO]"
 	echo "[INFO] * If not already done, import the CA certificate below into your client browser(s)"
 else
 	echo "[INFO] * Import the fake CA certificate below into your client browser(s)"
@@ -628,5 +625,20 @@ echo "[INFO]"
 echo "[INFO]   - See README.md for instructions"
 echo "[INFO]   - You may have to set your IDE key to '${HUBNAME}'"
 echo "[INFO]"
+if [[ "${SOLR_ENABLED}" = true ]]; then
+	echo "[INFO] ==(( ACTION REQUIRED ))================================================"
+	echo "[INFO]"
+	echo "[INFO] * Finish setting up Solr"
+	echo "[INFO]"
+	echo "[INFO]   - See https://help.hubzero.org/documentation/22/installation/redhat/addons/solr"
+	echo "[INFO]"
+fi
+echo "[INFO] ==(( ACTION REQUIRED ))================================================"
+echo "[INFO]"
+echo "[INFO] * Finish setting up Submit"
+echo "[INFO]"
+echo "[INFO]   - See https://help.hubzero.org/documentation/22/installation/redhat/install/submit"
+echo "[INFO]"
 echo "[INFO] ***********************************************************************"
+echo "[INFO]"
 echo "[INFO] Hub setup is complete"
