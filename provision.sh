@@ -148,7 +148,7 @@ if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
 		git config --global user.email "${GIT_EMAIL}"
 		echo "[INFO] Global git email set to '${GIT_EMAIL}'"
 	fi
-	git clone ${HUB_UPSTREAM_URL} --depth 1 --branch ${HUB_UPSTREAM_BRANCH} ${HUBZERO_CMS_DIR}
+	git clone ${HUB_UPSTREAM_URL} --branch ${HUB_UPSTREAM_BRANCH} ${HUBZERO_CMS_DIR}
 	cd ${HUBZERO_CMS_DIR}
 	git remote rename origin upstream
 	git remote add origin ${HUB_ORIGIN_URL}
