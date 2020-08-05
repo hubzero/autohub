@@ -39,6 +39,9 @@ CMS_KEY_PATH=${KEY_DIR}/${HUBNAME}-fake-cert-key.pem
 # Override for bug in `/usr/sbin/hubzero-mw2-iptables-basic` regex
 EXT_DEV=$(ip route ls | grep default | awk '{print $5}')
 
+# Webroot for hub
+HUBROOT=/var/www/${HUBNAME}
+
 
 # Optional variable overrides
 if [[ -f vars.sh ]]; then
@@ -160,22 +163,23 @@ hzcms update
 if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
 	# Restore `.git/`
 	mv -f ${DOTGIT_BACKUP_DIR} ${HUBZERO_CMS_DIR}/.git
-	cp -r ${HUBZERO_CMS_DIR}/.git /var/www/${HUBNAME}/
+	cp -r ${HUBZERO_CMS_DIR}/.git ${HUBROOT}/
 
 	# Start with a clean slate
 	echo "[INFO] Stashing changes"
-	cd /var/www/${HUBNAME}
+	cd ${HUBROOT}
 	git stash
 	git stash clear
 
 	# Remove friction from making changes to files
-	chown -fR apache:vagrant /var/www/${HUBNAME}
-	chown -fR apache:vagrant /var/www/${HUBNAME}/.*
-	chmod -fR g+w /var/www/${HUBNAME}
-	chmod -fR g+w /var/www/${HUBNAME}/.*
+	chown -fR apache:vagrant ${HUBROOT}
+	chown -fR apache:vagrant ${HUBROOT}/.*
+	chmod -fR g+w ${HUBROOT}
+	chmod -fR g+w ${HUBROOT}/.*
 
 	# Appease `hubzero-app`
-	chgrp -f apache /var/www/${HUBNAME}/configuration.php
+	chgrp -f apache ${HUBROOT}/configuration.php
+
 fi
 
 # Reset CMS passwords
@@ -185,8 +189,8 @@ fi
 OLD_CMS_DB_PASSWORD=$(egrep -o '^HUBDB=.*$' /etc/hubzero.secrets | cut -d= -f2)
 echo ${OLD_CMS_DB_PASSWORD} > /home/vagrant/old-db-pw
 sed -ri 's/(HUBDB=)'${OLD_CMS_DB_PASSWORD}'/\1'${CMS_DB_PASSWORD}'/' /etc/hubzero.secrets
-sed -ri "s/(\\\$password = ')${OLD_CMS_DB_PASSWORD}(';\$)/\1${CMS_DB_PASSWORD}\2/" /var/www/${HUBNAME}/configuration.php /etc/hubmail_gw.conf
-sed -ri "s/('password' => ')${OLD_CMS_DB_PASSWORD}(',)/\1${CMS_DB_PASSWORD}\2/" /var/www/${HUBNAME}/config/database.php
+sed -ri "s/(\\\$password = ')${OLD_CMS_DB_PASSWORD}(';\$)/\1${CMS_DB_PASSWORD}\2/" ${HUBROOT}/configuration.php /etc/hubmail_gw.conf
+sed -ri "s/('password' => ')${OLD_CMS_DB_PASSWORD}(',)/\1${CMS_DB_PASSWORD}\2/" ${HUBROOT}/config/database.php
 
 mysql -u root -p${DB_ROOT_PASSWORD} ${HUBNAME} <<EOT
 UPDATE jos_extensions
