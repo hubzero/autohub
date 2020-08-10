@@ -207,12 +207,7 @@ The database is similarly shared in the `./guestdata/db` directory. As above, th
 
 [Xdebug](https://xdebug.org/) is installed during setup, which enables remote debugging of hub code in your favorite IDE (see [**Clients**](https://xdebug.org/docs/remote) for a list of supported IDEs).
 
-For example, to get debugging working with PhpStorm:
-
-- [Configure PhpStorm](https://www.jetbrains.com/help/phpstorm/2020.1/configuring-xdebug.html#integrationWithProduct)
-- Install **Xdebug helper** browser addon:
-    - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/xdebug-helper-for-firefox/)
-    - [Chrome](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
+[More documentation here](docs/DEBUG.md) (see also: [configure Xdebug](https://www.jetbrains.com/help/phpstorm/configuring-xdebug.html))
 
 
 ## Dotfiles
