@@ -203,12 +203,6 @@ if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
 
 	# Appease `hubzero-app`
 	chgrp -f apache ${HUBROOT}/configuration.php
-
-	# Replicate config under `app`
-	echo "[INFO] Copying configuration to app directory"
-	mkdir -p ${HUBROOT}/app/config
-	#cp -f ${HUBROOT}/config/*.php ${HUBROOT}/app/config/
-	find ${HUBROOT}/config -type f -exec cp -f {} ${HUBROOT}/app/config/ \;
 fi
 
 # Reset CMS passwords
@@ -226,6 +220,11 @@ UPDATE jos_extensions
  SET params=REPLACE(params,'"statsDBPassword":"${OLD_CMS_DB_PASSWORD}"','"statsDBPassword":"${CMS_DB_PASSWORD}"')
 WHERE name='com_usage';
 EOT
+
+# Replicate config under `app`
+echo "[INFO] Copying configuration to app directory"
+mkdir -p ${HUBROOT}/app/config
+find ${HUBROOT}/config -type f -exec cp -f {} ${HUBROOT}/app/config/ \;
 
 # Create certs
 HOST_CA_CERT_PATH="${HOST_SHARE_DIR}/ca.crt"
