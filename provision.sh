@@ -565,7 +565,6 @@ cat <<EOT >> ${PHP_INI_PATH}
 
 ;; Added by autohub
 [xdebug]
-zend_extension=${PHP_ROOT}/usr/lib64/php/modules/xdebug.so
 xdebug.remote_enable=1
 xdebug.remote_host='${HOST_IP}'
 xdebug.remote_port=9000
