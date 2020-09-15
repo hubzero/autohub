@@ -13,7 +13,8 @@
 5. Start machine
     1. `$ vagrant up`
 6. [Trust certificates](#certificates)
-7. Visit the [hub](https://devhub.localdomain:5443)
+7. Visit the [hub](https://devhub.localdomain:5443)  
+  a. Click on the "Jump to Your Hub" button at the bottom of the landing page
 
 ## Summary
 
@@ -302,4 +303,3 @@ $ vagrant box list
 To make available remotely via the Internet, `metadata.json` should be updated with the new version, and both it and the `.box` file uploaded to `https://help.hubzero.org` into the `/app/site/media/vm/` directory.
 
 **Note**: The Packer setup here was modified from the [INSANEWORKS CentOS6 template](https://github.com/INSANEWORKS/insaneworks-packer-template).
-
