@@ -269,6 +269,8 @@ cp -f ${MINICA_DIR}/${HOSTNAME}/cert.pem ${CMS_CERT_PATH}
 chmod -f 0644 ${CMS_CERT_PATH}
 sed -ri "s#(SSLCertificateFile) SSLCERTFILE#\1 ${CMS_CERT_PATH}#" "/etc/httpd/sites-m4/${HUBNAME}-ssl.m4"
 sed -ri "s#(SSLCertificateKeyFile) SSLCERTKEYFILE#\1 ${CMS_KEY_PATH}#" "/etc/httpd/sites-m4/${HUBNAME}-ssl.m4"
+APACHELINE=$(grep -n -E 'ProxyPassMatch.*?php' /etc/httpd/sites-m4/${HUBNAME}-ssl.m4 | cut -f1 -d:)
+sed -i "${APACHELINE} a \ \ \ \ \ \ \ \ SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1" /etc/httpd/sites-m4/${HUBNAME}-ssl.m4
 hzcms reconfigure ${HUBNAME}
 # Sometimes it just won't die:
 killall httpd; sleep 1
