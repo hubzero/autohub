@@ -13,7 +13,7 @@ service auditd stop
 
 # Force the logs to rotate and remove old logs we don’t need
 logrotate -f /etc/logrotate.conf
-rm –f /var/log/*-???????? /var/log/*.gz
+rm -f /var/log/*-???????? /var/log/*.gz
 rm -f /var/log/dmesg.old
 rm -rf /var/log/anaconda
 
@@ -30,13 +30,13 @@ rm -f /etc/udev/rules.d/70*
 sed -Ei '/^(HWADDR|UUID)=/d' /etc/sysconfig/network-scripts/ifcfg-$(ip route | grep default | awk '{print $5}')
 
 # Clean /tmp out
-rm –rf /tmp/*
-rm –rf /var/tmp/*
+rm -rf /tmp/*
+rm -rf /var/tmp/*
 
 # Remove the SSH host keys
 # They will be regenerated for each instance
 # at startup by the sshd-keygen.service
-rm –f /etc/ssh/*key*
+rm -f /etc/ssh/*key*
 
 # Remove root user's SSH files
 rm -rf /root/.ssh/
