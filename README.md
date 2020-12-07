@@ -18,7 +18,7 @@
 
 ## Summary
 
-Sets up a mostly fully functioning HUBzero instance inside a Vagrant VirtualBox-backed VM for CentOS 6.
+Sets up a mostly fully functioning HUBzero instance inside a Vagrant VirtualBox-backed VM for CentOS 7.
 
 The goal is to have a setup that fairly closely resembles an actual fully featured production hub that developers can code and test against.
 
@@ -260,9 +260,9 @@ The following files in the `packer/` directory control the image build:
 
 File                  | Description
 --                    | --
-`centos6.json`        | Primary Packer configuration file
-`vars.json`           | "Local" variables that override the above
-`http/ks.cfg`         | CentOS [Kickstart](https://docs.centos.org/en-US/centos/install-guide/Kickstart2/) config for automated installs
+`centos7.json`        | Primary Packer configuration file
+`vars7.json`          | "Local" variables that override the above
+`http/ks7.cfg`        | CentOS [Kickstart](https://docs.centos.org/en-US/centos/install-guide/Kickstart2/) config for automated installs
 `scripts/vagrant.sh`  | Sets up `vagrant` user SSH
 `scripts/vmtools.sh`  | Installs VirtualBox guest additions
 `scripts/hubzero.sh`  | Installs HUBzero deps/packages
@@ -273,13 +273,13 @@ File                  | Description
 Build the image (this takes a while):
 
 ```bash
-$ packer build -var-file=vars.json centos6.json
+$ packer build -var-file=vars7.json centos7.json
 ```
 
 To add to Vagrant:
 
 ```bash
-$ vagrant box add <your-box-name> ~/path-to-box/HUBzero-CentOS-6.10-x86_64-<yyyyMMdd>-virtualbox.box
+$ vagrant box add <your-box-name> ~/path-to-box/HUBzero-CentOS-7.8-2009-x86_64-<yyyyMMdd>-virtualbox.box
 ```
 
 Then in `vars.yml` set `HUBZERO_VAGRANT_BOX: <your-box-name>` and run:
@@ -302,4 +302,4 @@ $ vagrant box list
 
 To make available remotely via the Internet, `metadata.json` should be updated with the new version, and both it and the `.box` file uploaded to `https://help.hubzero.org` into the `/app/site/media/vm/` directory.
 
-**Note**: The Packer setup here was modified from the [INSANEWORKS CentOS6 template](https://github.com/INSANEWORKS/insaneworks-packer-template).
+**Note**: The Packer setup here was modified from the [INSANEWORKS CentOS7 template](https://github.com/INSANEWORKS/insaneworks-packer-template).
