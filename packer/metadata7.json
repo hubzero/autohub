@@ -1,0 +1,17 @@
+{
+  "name": "hubzero/hub-centos7",
+  "description": "This box contains CentOS 7.8.2009 64-bit with HUBzero installed but not configured.",
+  "versions": [
+    {
+      "version": "20201207",
+      "providers": [
+        {
+          "name": "virtualbox",
+          "url": "https://help.hubzero.org/app/site/media/vm/HUBzero-CentOS-7.8.2009-x86_64-20201207-virtualbox.box",
+          "checksum_type": "sha1",
+          "checksum": "bb31611244a0b578a83a1cdd424f4e1b3a9e8a0c"
+        }
+      ]
+    }
+  ]
+}
