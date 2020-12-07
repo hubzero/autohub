@@ -32,7 +32,7 @@
       "ssh_password": "{{user `password`}}",
       "ssh_timeout": "{{user `ssh_timeout`}}",
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks6.cfg<enter><wait>"
       ],
       "disk_size": "22628",
       "hard_drive_interface": "scsi",
