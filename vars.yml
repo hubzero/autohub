@@ -10,7 +10,7 @@ GIT_EMAIL: '<YOUR GH EMAIL>'
 HUB_ORIGIN_URL: git@github.com:<YOUR GH USER>/hubzero-cms.git
 
 # Vagrant box name
-HUBZERO_VAGRANT_BOX: hubzero/hub-centos6
+HUBZERO_VAGRANT_BOX: hubzero/hub-centos7
 
 # VM details
 VBOX_CPUS: 2
