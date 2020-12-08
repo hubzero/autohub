@@ -127,7 +127,8 @@ yum -y install hubzero-vncproxyd-ws
 
 
 # Metrics
-yum -y install hubzero-metrics
+# TODO: relies upon obsolete php-cli and php-common; rectify
+#yum -y install hubzero-metrics
 
 
 # telequotad
@@ -172,3 +173,8 @@ cd minica
 go build
 yum -y remove golang
 rm -rf ~root/go
+
+
+# Remove obsolete PHP, use Remi PHP as default
+yum -y remove php-cli php-common
+ln -sf /opt/remi/php56/root/bin/php /usr/bin/php
