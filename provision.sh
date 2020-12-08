@@ -223,8 +223,14 @@ function configure_cms {
     else
         echo "[INFO] Using hub code from package manager"
     fi
+
     hzcms install ${HUBNAME}
+
+    # Remove toolgit so `hzcms update` runs properly
+    rm -rf /var/www/.ssh-toolgit/toolgit_rsa
+
     hzcms update
+
     if [[ ! -z "${HUB_UPSTREAM_URL}" ]]; then
         # Restore `.git/`
         mv -f ${DOTGIT_BACKUP_DIR} ${HUBZERO_CMS_DIR}/.git
