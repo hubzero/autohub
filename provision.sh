@@ -198,6 +198,10 @@ EOT
     VAGRANT_MYSQL_CONF=~vagrant/.my.cnf
     echo -e "[client]\nuser=${HUBNAME}\npassword=${CMS_DB_PASSWORD}\n" > ${VAGRANT_MYSQL_CONF}
     chmod -f 0600 ${VAGRANT_MYSQL_CONF}
+
+    # Seems to not start sometimes
+    systemctl restart mysql
+    sleep 2
 }
 
 function configure_cms {
