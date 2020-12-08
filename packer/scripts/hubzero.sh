@@ -9,8 +9,7 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
 
 
 # Add repos
-yum -y install epel-release
-yum -y install centos-release-scl-rh
+yum -y install epel-release centos-release-scl-rh
 rpm -Uvh http://packages.hubzero.org/rpm/julian-el7/hubzero-release-julian-2.2.7-1.el7.noarch.rpm
 
 yum -y update
@@ -18,6 +17,10 @@ yum -y update
 
 # Disable yum fastestmirror plugin
 sed -i 's/^enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
+
+
+# Utils
+yum -y install lsof
 
 
 # Firewall
