@@ -704,7 +704,7 @@ EOT
 
 function show_closing_message {
     echo "[INFO] ==(( ACTION REQUIRED ))================================================"
-    if [[ "${EXISTING_CA}" = true ]]; then
+    if [ "${EXISTING_CA}" = true ]; then
         echo "[INFO]"
         echo "[INFO] * If not already done, import the CA certificate below into your client browser(s)"
     else
@@ -741,7 +741,7 @@ function show_closing_message {
     echo "[INFO]   - See README.md for instructions"
     echo "[INFO]   - You may have to set your IDE key to '${HUBNAME}'"
     echo "[INFO]"
-    if [[ "${SOLR_ENABLED}" = true ]]; then
+    if [ "${SOLR_ENABLED}" = true ]; then
         echo "[INFO] ==(( ACTION REQUIRED ))================================================"
         echo "[INFO]"
         echo "[INFO] * Finish setting up Solr"
@@ -770,7 +770,7 @@ function main {
     init_vars
     override_vars
 
-    if [ "$CHECK_OLD_DATA" = true ]; then
+    if [ "${CHECK_OLD_DATA}" = true ]; then
         check_old_data
     else
         echo "[SKIP] Not checking for orphaned webroot or database data"
@@ -782,7 +782,7 @@ function main {
     configure_cms
     configure_mailgateway
 
-    if [ "$TOOLS_ENABLED" = true]; then
+    if [ "${TOOLS_ENABLED}" = true ]; then
         configure_ldap
         configure_webdav
         configure_subversion
@@ -801,13 +801,13 @@ function main {
         echo "[SKIP] Not enabling infrastructure for tools"
     fi
 
-    if [[ "${SOLR_ENABLED}" = true ]]; then
+    if [ "${SOLR_ENABLED}" = true ]; then
         configure_solr
     else
         echo "[SKIP] Solr option is disabled; skipping"
     fi
 
-    if [ "$TOOLS_ENABLED" = true]; then
+    if [ "${TOOLS_ENABLED}" = true ]; then
         configure_shibboleth
     else
         echo "[SKIP] Shibboleth option is disabled; skipping"
