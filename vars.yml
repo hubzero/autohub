@@ -7,7 +7,7 @@ GIT_EMAIL: '<YOUR GH EMAIL>'
 # - When done making a change, a PR should be made from this repo
 #     to the repo above
 # - Use e.g. `git@github.com`, not `https://` to avoid 403 Forbidden errors
-HUB_ORIGIN_URL: git@github.com:<YOUR GH USER>/hubzero-cms.git
+HUB_ORIGIN_URL: git@github.com:${GIT_USERNAME}/hubzero-cms.git
 
 # Vagrant box name
 HUBZERO_VAGRANT_BOX: hubzero/hub-centos7
