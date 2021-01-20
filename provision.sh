@@ -44,6 +44,7 @@ function init_vars {
 
 
     # Provision options
+    YUM_UPDATE=true
     CHECK_OLD_DATA=true
     TOOLS_ENABLED=false
 
@@ -152,6 +153,13 @@ function precheck {
     # TODO: Remove from here after moving to Packer script
     yum -y remove php-cli php-common
     ln -sf /opt/remi/php56/root/bin/php /usr/bin/php
+    # Update packages
+    if [ "${YUM_UPDATE}" = true ]; then
+        echo "[INFO] Updating packages"
+        yum -y update
+    else
+        echo "[SKIP] Not updating packages"
+    fi
 }
 
 
