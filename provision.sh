@@ -693,6 +693,14 @@ function configure_quality_of_life {
 | MySQL CMS password:  ${CMS_DB_PASSWORD}
 | php.ini location:    ${PHP_INI_PATH}
 |
+| Operating system:    $(cat /etc/centos-release)
+| Docker:              $(docker --version)
+| docker-compose:      $(/usr/local/bin/docker-compose --version)
+| Java:                $(java -version 2>&1 /dev/null | head -2 | tail -1)
+| Apache:              $(httpd -version | head -1 | sed -e 's/^.\+: //')
+| PHP:                 $(php --version | head -1)
+| MySQL:               $(mysql --version | sed 's/, .\+$//')
+|
 | * These are initial values; changes you make won't be reflected here
 | * Edit '/etc/motd' to make changes
 |
