@@ -2,6 +2,7 @@
 
 MYSQL_ROOT_PW=vagrant
 MYSQL_ROOT_CONFIG_PATH=/root/.my.cnf
+TOOLS_ENABLED=false
 
 # Disable SELinux
 setenforce 0
@@ -30,9 +31,11 @@ yum -y install hubzero-iptables-basic
 service hubzero-iptables-basic start
 chkconfig hubzero-iptables-basic on
 
-yum -y install hubzero-mw2-iptables-basic
-service hubzero-mw2-iptables-basic start
-chkconfig hubzero-mw2-iptables-basic on
+if [ "${TOOLS_ENABLED}" = true ]; then
+    yum -y install hubzero-mw2-iptables-basic
+    service hubzero-mw2-iptables-basic start
+    chkconfig hubzero-mw2-iptables-basic on
+fi
 
 
 # Apache
@@ -77,27 +80,29 @@ yum -y install hubzero-cms-2.2 hubzero-texvc hubzero-textifier wkhtmltopdf
 yum -y install hubzero-mailgateway
 
 
-# TODO: Proper CentOS 7 tool usage with Docker instead of OpenVZ remains unclear
-#       For now we install the same packages as CentOS 6 below
+if [ "${TOOLS_ENABLED}" = true ]; then
+    # TODO: Proper CentOS 7 tool usage with Docker instead of OpenVZ remains unclear
+    #       For now we install the same packages as CentOS 6 below
 
-# OpenLDAP
-yum -y install hubzero-openldap
-
-
-# WebDAV
-yum -y install hubzero-webdav
+    # OpenLDAP
+    yum -y install hubzero-openldap
 
 
-# Subversion
-yum -y install hubzero-subversion
+    # WebDAV
+    yum -y install hubzero-webdav
 
 
-# Trac
-yum -y install hubzero-trac
+    # Subversion
+    yum -y install hubzero-subversion
 
 
-# Forge
-yum -y install hubzero-forge
+    # Trac
+    yum -y install hubzero-trac
+
+
+    # Forge
+    yum -y install hubzero-forge
+fi
 
 
 # Docker
