@@ -41,7 +41,7 @@ Prereqs:
 Check out this repository:
 
 ```bash
-$ git clone https://gitlab.hubzero.org/hubzero-next/autohub <target-dir>
+$ git clone https://github.com/hubzero/autohub.git <target-dir>
 $ cd <target-dir>
 ```
 
