@@ -24,7 +24,7 @@ The goal is to have a setup that fairly closely resembles an actual fully featur
 
 Setting up a hub is tedious work. This helps remove that tedium and allows developers to quickly set up disposable hubs within local development environments.
 
-This is essentially an automation of the [steps documented by HUBzero](https://help.hubzero.org/documentation/22/installation/redhat/install).
+This is essentially an automation of the [steps documented by HUBzero](https://help.hubzero.org/documentation/22/installation/centos7/install).
 
 Most everything is fully set up, except for things like Submit, which are complex and will require manual intervention to configure properly.
 
