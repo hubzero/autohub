@@ -149,6 +149,11 @@ function precheck {
     echo -e "[client]\nuser=root\npassword=${DB_ROOT_PASSWORD}\n" > ${LOCAL_MYSQL_CONF}
     chmod -f 0600 ${LOCAL_MYSQL_CONF}
 
+    # TODO: Remove from here after moving to Packer script
+    # Remove old PHP
+    yum -y remove php-cli php-common
+    ln -sf /opt/remi/php56/root/bin/php /usr/bin/php
+
     # Update packages
     if [ "${YUM_UPDATE}" = true ]; then
         echo "[INFO] Updating packages"
