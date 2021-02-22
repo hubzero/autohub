@@ -23,6 +23,21 @@ base_dir = find_base_dir
 # Load configuration
 VARS = YAML.load(File.read(File.join base_dir, 'vars.yml'))
 
+# Check if GIT_* variables should be retrieved with "git config"
+['GIT_EMAIL'].each do |git_var|
+  var_value = VARS[git_var]
+  use_git_config = /^\<git config (?<name>[a-z].*)\>/.match(var_value)
+  if use_git_config
+    key_name = use_git_config.named_captures['name']
+    git_config_value = `git config #{key_name}`
+    if $?.exitstatus == 1
+      STDERR.puts "Error: the \"#{key_name}\" key is not configured for Git"
+      exit 1
+    end
+    VARS[git_var] = git_config_value.rstrip
+  end
+end
+
 # Make directories needed for CMS site/DB persistence
 mkdir(File.join base_dir, VARS['HOST_SHARE_DIR'], 'webroot')
 mkdir(File.join base_dir, VARS['HOST_SHARE_DIR'], 'webroot', 'app')

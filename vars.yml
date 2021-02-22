@@ -1,6 +1,6 @@
 # Used for identification in git commits
 GIT_USERNAME: '<YOUR GH UN>'
-GIT_EMAIL: '<YOUR GH EMAIL>'
+GIT_EMAIL: '<git config user.email>'  # or override: e.g., 'jdoe@mail.com'
 
 # HUBzero forked repo URL
 # - This should point to a repo you control
