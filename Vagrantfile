@@ -67,6 +67,8 @@ Vagrant.configure('2') do |config|
   config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], 'webroot'), "/var/www/#{VARS['HUBNAME']}", owner: 'vagrant', group: 'apache'
   config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], 'webroot/app/cache'), "/var/www/#{VARS['HUBNAME']}/app/cache", owner: 'vagrant', group: 'apache', mount_options: ['dmode=775', 'fmode=664']
   config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], 'webroot/app/site/resources'), "/var/www/#{VARS['HUBNAME']}/app/site/resources", owner: 'vagrant', group: 'apache', mount_options: ['dmode=775', 'fmode=664']
+  config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], '../../api'), "/var/www/#{VARS['HUBNAME']}/app/components/com_prodev/dev/api", owner: 'vagrant', group: 'apache', mount_options: ['dmode=775', 'fmode=664']
+  config.vm.synced_folder File.join(VARS['HOST_SHARE_DIR'], '../../spa'), "/var/www/#{VARS['HUBNAME']}/app/components/com_prodev/dev/spa", owner: 'vagrant', group: 'apache', mount_options: ['dmode=775', 'fmode=664']
 
   config.vm.provider 'virtualbox' do |vb|
     vb.name = "hubzero-#{VARS['HUBNAME']}"
