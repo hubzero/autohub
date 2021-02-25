@@ -47,12 +47,6 @@ function init_vars {
     YUM_UPDATE=true
     CHECK_OLD_DATA=true
     TOOLS_ENABLED=false
-
-
-    # Optional variable overrides
-    if [[ -f vars.sh ]]; then
-        . vars.sh
-    fi
 }
 
 
