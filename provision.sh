@@ -47,6 +47,9 @@ function init_vars {
     YUM_UPDATE=true
     CHECK_OLD_DATA=true
     TOOLS_ENABLED=false
+
+    # URL for installation documentation (used in INFO & ERROR messages)
+    INSTALLATION_DOC_URL=https://help.hubzero.org/documentation/22/installation/centos7
 }
 
 
@@ -169,7 +172,7 @@ function check_postfix {
             echo "[INFO] No issues detected with Postfix"
     else
         echo "[ERROR] Problem(s) found with Postfix"
-            echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/mail"
+            echo "[ERROR] * See $INSTALLATION_DOC_URL/install/mail"
             exit 1
     fi
 }
@@ -470,7 +473,7 @@ function configure_openvz {
             echo "[INFO] Verified OpenVZ is working"
     else
             echo "[ERROR] Problems found with OpenVZ"
-            echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/openvz"
+            echo "[ERROR] * See $INSTALLATION_DOC_URL/install/openvz"
             exit 1
     fi
 }
@@ -506,7 +509,7 @@ function configure_maxwell_service {
         echo "[INFO] Session appears to have launched properly"
     else
         echo "[ERROR] Session failed to launch"
-        echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
+        echo "[ERROR] * See $INSTALLATION_DOC_URL/install/maxwell_service"
         exit 1
     fi
 
@@ -519,7 +522,7 @@ function configure_maxwell_service {
         echo "[INFO] Able to connect to session VNC server"
     else
         echo "[ERROR] Failed to connect to session VNC server"
-        echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
+        echo "[ERROR] * See $INSTALLATION_DOC_URL/install/maxwell_service"
         exit 1
     fi
 
@@ -529,7 +532,7 @@ function configure_maxwell_service {
         echo "[INFO] Successfully shut down session"
     else
         echo "[ERROR] Failed to shut down session"
-        echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/maxwell_service"
+        echo "[ERROR] * See $INSTALLATION_DOC_URL/install/maxwell_service"
         vzlist
         exit 1
     fi
@@ -571,7 +574,7 @@ function check_telequotad {
         echo "[INFO] Quotas appear to be enabled"
     else
         echo "[ERROR] Quotas don't seem to be set"
-            echo "[ERROR] * See https://help.hubzero.org/documentation/22/installation/redhat/install/telequotad"
+            echo "[ERROR] * See $INSTALLATION_DOC_URL/install/telequotad"
             exit 1
     fi
 }
@@ -610,7 +613,7 @@ function configure_rappture {
     echo "[INFO] * A workspace may need to be opened and closed a few times before"
     echo "[INFO] the changes to the session template appear in a workspace."
     echo "[INFO] Further manual testing is required"
-    echo "[INFO] * See https://help.hubzero.org/documentation/22/installation/redhat/install/rappture"
+    echo "[INFO] * See $INSTALLATION_DOC_URL/install/rappture"
 }
 
 
@@ -757,14 +760,14 @@ function show_closing_message {
         echo "[INFO]"
         echo "[INFO] * Finish setting up Solr"
         echo "[INFO]"
-        echo "[INFO]   - See https://help.hubzero.org/documentation/22/installation/redhat/addons/solr"
+        echo "[INFO]   - See $INSTALLATION_DOC_URL/addons/solr"
         echo "[INFO]"
     fi
     echo "[INFO] ==(( ACTION REQUIRED ))================================================"
     echo "[INFO]"
     echo "[INFO] * Finish setting up Submit"
     echo "[INFO]"
-    echo "[INFO]   - See https://help.hubzero.org/documentation/22/installation/redhat/install/submit"
+    echo "[INFO]   - See $INSTALLATION_DOC_URL/install/submit"
     echo "[INFO]"
     echo "[INFO] ***********************************************************************"
     echo "[INFO]"
