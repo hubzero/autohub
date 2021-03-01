@@ -93,7 +93,7 @@ $ vagrant up
 
 ## Certificates
 
-While provisining the hub, the script creates a new TLS certificate for HTTPS and the VNC proxy's Secure WebSocket (WSS). You can provide the issuing certificate authority (CA) or not. In the latter case the system will generate its own fake issuing CA first using [minica](https://github.com/jsha/minica).
+While provisioning the hub, the script creates a new TLS certificate for HTTPS and the VNC proxy's Secure WebSocket (WSS). You can provide the issuing certificate authority (CA) or not. In the latter case the system will generate its own fake issuing CA first using [minica](https://github.com/jsha/minica).
 
 Providing your own CA can save the tedious work of manually adding a new CA to a browser, because you can install your own CA once, and not have to worry about it for subsequent `autohub` hubs when using the same browser.
 
@@ -195,7 +195,7 @@ This can lead to some confusion and issues, however, so be sure to read the docs
 
 Second, if you delete the files on the host, they will be deleted on the guest, and vice-versa.
 
-Finally, all files have to have the same permissions, and the hub can have isuses unless the files are owned by `apache` and also belong to the `apache` group. You can edit the files freely via the host, but when SSHed into the machine, you will have to use `sudo` to modify them.
+Finally, all files have to have the same permissions, and the hub can have issues unless the files are owned by `apache` and also belong to the `apache` group. You can edit the files freely via the host, but when SSHed into the machine, you will have to use `sudo` to modify them.
 
 One benefit of this behavior, however, is that you may move the webroot or select files to different autohub instances, which may be useful.
 
